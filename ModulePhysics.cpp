@@ -248,29 +248,18 @@ bool ModulePhysics::CleanUp()
 
 void ModulePhysics::CreateScenarioGround()
 {
-	// Get coordinates of the screen center and radius
-	int x = SCREEN_WIDTH / 2;
-	int y = SCREEN_HEIGHT / 1.5f;
-	int diameter = SCREEN_WIDTH / 2;
+	b2BodyDef map;
+	map.type = b2_staticBody;
+	b2Body* square = world->CreateBody(&map);
 
-	// Create a static body in the middle of the screen
-	b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	int back[8] = {
+			0, 0,
+			200, 00,
+			200, 600,
+			0, 600,
+	};
 
-	// Add this static body to the World
-	b2Body* big_ball = world->CreateBody(&body);
-
-	// Create a big circle shape
-	b2CircleShape shape;
-	shape.m_radius = PIXEL_TO_METERS(diameter) * 0.5f;
-
-	// Create a fixture and associate the circle to it
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-
-	// Add the ficture (plus shape) to the static body
-	big_ball->CreateFixture(&fixture);
+	CreateChain(0, 0, back, 8, map);
 }
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
@@ -372,11 +361,10 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
+PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, b2BodyDef body)
 {
 	// Create BODY at position x,y
-	b2BodyDef body;
-	body.type = b2_dynamicBody;
+
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	// Add BODY to the world
