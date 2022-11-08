@@ -260,26 +260,37 @@ void ModulePhysics::CreateScenarioGround()
 	};
 
 	b2BodyDef pala;
-	pala.type = b2_staticBody;
+	pala.type = b2_dynamicBody;
 	b2Body* palas = world->CreateBody(&pala);
 
-	int palashape[4] = {
-			10, 30,
-			30, 10,
+	int palashape[8] = {
+			0, 0,
+			60, 0,
+			60, 30,
+			0, 30,
 
 	};
 
-	CreateChain(100, 100, palashape, 4, pala);
+	b2BodyDef suport;
+	suport.type = b2_staticBody;
+	b2Body* pelotas = world->CreateBody(&suport);
+
+	b2RevoluteJointDef jointDef;
+	jointDef.bodyA = pelotas;
+	jointDef.bodyB = palas;
+
+	b2RevoluteJointDef* joint = (b2RevoluteJointDef*)world->CreateJoint(&jointDef);
+
+	CreateCircle(100, 120, 10, suport);
+	CreateChain(100, 100, palashape, 8, pala);
 	CreateChain(0, 0, back, 8, map);
 
 
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyDef body)
 {
 	// Create BODY at position x,y
-	b2BodyDef body;
-	body.type = b2_dynamicBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	// Add BODY to the world

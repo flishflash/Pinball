@@ -43,6 +43,7 @@ bool ModuleSceneIntro::Start()
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
 
+
 	return ret;
 }
 
@@ -56,7 +57,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	// If user presses SPACE, enable RayCast
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		// Enable raycast mode
 		ray_on = !ray_on;
@@ -66,25 +67,12 @@ update_status ModuleSceneIntro::Update()
 		ray.y = App->input->GetMouseY();
 	}
 
-	// If user presses 1, create a new circle object
-	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25));
-
-		// Add this module (ModuleSceneIntro) as a "listener" interested in collisions with circles.
-		// If Box2D detects a collision with this last generated circle, it will automatically callback the function ModulePhysics::BeginContact()
-		circles.getLast()->data->listener = this;
-	}
-
-	// If user presses 2, create a new box object
-	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50));
-	}
-
-
 	// Prepare for raycast ------------------------------------------------------
-	
+	b2BodyDef ballDef;
+	ballDef.type = b2_dynamicBody;
+
+	ball = App->physics->CreateCircle(200, 100, 10, ballDef);
+
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
@@ -99,49 +87,15 @@ update_status ModuleSceneIntro::Update()
 	// All draw functions ------------------------------------------------------
 
 	// Circles
-	p2List_item<PhysBody*>* c = circles.getFirst();
+	PhysBody* c = ball;
 	while(c != NULL)
 	{
 		int x, y;
-		c->data->GetPosition(x, y);
+		c->GetPosition(x, y);
 
 		// If mouse is over this circle, paint the circle's texture
-		if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
-			App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
-
-		c = c->next;
-	}
-
-	// Boxes
-	c = boxes.getFirst();
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-
-		// Always paint boxes texture
-		App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
-
-		// Are we hitting this box with the raycast?
-		if(ray_on)
-		{
-			// Test raycast over the box, return fraction and normal vector
-			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
-			if(hit >= 0)
-				ray_hit = hit;
-		}
-		c = c->next;
-	}
-
-	// Rick Heads
-	c = ricks.getFirst();
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		c->data->body->SetType(b2_staticBody);
-		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
+		if(c->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
+			App->renderer->Blit(circle, x, y, NULL, 1.0f, c->GetRotation());
 	}
 
 	// Raycasts -----------------
