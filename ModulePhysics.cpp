@@ -259,7 +259,20 @@ void ModulePhysics::CreateScenarioGround()
 			10, 730,
 	};
 
+	b2BodyDef pala;
+	pala.type = b2_staticBody;
+	b2Body* palas = world->CreateBody(&pala);
+
+	int palashape[4] = {
+			10, 30,
+			30, 10,
+
+	};
+
+	CreateChain(100, 100, palashape, 4, pala);
 	CreateChain(0, 0, back, 8, map);
+
+
 }
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
