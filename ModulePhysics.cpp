@@ -27,6 +27,7 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 ModulePhysics::~ModulePhysics()
 {
 	// You should do some memory cleaning here, if required
+
 }
 
 bool ModulePhysics::Start()
@@ -248,6 +249,7 @@ bool ModulePhysics::CleanUp()
 
 void ModulePhysics::CreateScenarioGround()
 {
+
 	b2BodyDef map;
 	map.type = b2_staticBody;
 	b2Body* square = world->CreateBody(&map);
@@ -271,25 +273,49 @@ void ModulePhysics::CreateScenarioGround()
 
 	};
 
-	b2BodyDef suport;
-	suport.type = b2_staticBody;
-	b2Body* pelotas = world->CreateBody(&suport);
-
-	b2RevoluteJointDef jointDef;
-	jointDef.bodyA = pelotas;
-	jointDef.bodyB = palas;
-
-	b2RevoluteJointDef* joint = (b2RevoluteJointDef*)world->CreateJoint(&jointDef);
-
-	CreateCircle(100, 120, 10, suport);
+	CreateCircleStatic(100, 120, 10);
 	CreateChain(100, 100, palashape, 8, pala);
 	CreateChain(0, 0, back, 8, map);
 
 
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyDef body)
+PhysBody* ModulePhysics::CreateCircleStatic(int x, int y, int radius)
 {
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	// Create BODY at position x,y
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	// Add BODY to the world
+	b2Body* b = world->CreateBody(&body);
+
+	// Create SHAPE
+	b2CircleShape shape;
+	shape.m_radius = PIXEL_TO_METERS(radius);
+
+	// Create FIXTURE
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.density = 1.0f;
+
+	// Add fixture to the BODY
+	b->CreateFixture(&fixture);
+
+	// Create our custom PhysBody class
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = pbody->height = radius;
+
+	// Return our PhysBody class
+	return pbody;
+}
+
+PhysBody* ModulePhysics::CreateCircleDynamic(int x, int y, int radius)
+{
+	b2BodyDef body;
+	body.type = b2_dynamicBody;
 	// Create BODY at position x,y
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 

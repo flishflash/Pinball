@@ -43,6 +43,7 @@ bool ModuleSceneIntro::Start()
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
 
+	ball = App->physics->CreateCircleDynamic(100, 200, 10);
 
 	return ret;
 }
@@ -68,10 +69,9 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	// Prepare for raycast ------------------------------------------------------
-	b2BodyDef ballDef;
-	ballDef.type = b2_dynamicBody;
-
-	ball = App->physics->CreateCircle(200, 100, 10, ballDef);
+	int x, y;
+	ball->GetPosition(x, y);
+	App->renderer->Blit(circle, x, y);
 
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
@@ -83,20 +83,6 @@ update_status ModuleSceneIntro::Update()
 
 	// Declare a vector. We will draw the normal to the hit surface (if we hit something)
 	fVector normal(0.0f, 0.0f);
-
-	// All draw functions ------------------------------------------------------
-
-	// Circles
-	PhysBody* c = ball;
-	while(c != NULL)
-	{
-		int x, y;
-		c->GetPosition(x, y);
-
-		// If mouse is over this circle, paint the circle's texture
-		if(c->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
-			App->renderer->Blit(circle, x, y, NULL, 1.0f, c->GetRotation());
-	}
 
 	// Raycasts -----------------
 	if(ray_on == true)

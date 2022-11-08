@@ -49,7 +49,8 @@ public:
 	void CreateScenarioGround();
 
 	// Create basic physics objects
-	PhysBody* CreateCircle(int x, int y, int radius, b2BodyDef body);
+	PhysBody* CreateCircleStatic(int x, int y, int radius);
+	PhysBody* CreateCircleDynamic(int x, int y, int radius);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, b2BodyDef body);
