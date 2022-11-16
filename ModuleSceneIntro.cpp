@@ -44,6 +44,9 @@ bool ModuleSceneIntro::Start()
 	lower_ground_sensor->listener = this;
 
 	ball = App->physics->CreateCircleDynamic(100, 200, 10);
+	App->physics->CreateCircleStatic(107, 269, 13);
+	App->physics->CreateCircleStatic(186, 267, 13);
+	App->physics->CreateCircleStatic(150, 322, 13);
 
 	return ret;
 }

@@ -1,8 +1,51 @@
-﻿  ModulePhysics.cpp
-C:\Users\joseti1\Documents\GitHub\Pinball\ModulePhysics.cpp(373,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\joseti1\Documents\GitHub\Pinball\ModulePhysics.cpp(374,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\joseti1\Documents\GitHub\Pinball\ModulePhysics.cpp(426,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\joseti1\Documents\GitHub\Pinball\ModulePhysics.cpp(529,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\joseti1\Documents\GitHub\Pinball\ModulePhysics.cpp(530,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\joseti1\Documents\GitHub\Pinball\ModulePhysics.cpp(536,27): warning C4244: 'return': conversion from 'float32' to 'int', possible loss of data
-  SDL Game.vcxproj -> C:\Users\joseti1\Documents\GitHub\Pinball\Debug\Box2D - Tutorial.exe
+﻿  ModuleSceneIntro.cpp
+C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(94,45): warning C4244: 'argumento': conversión de 'TYPE' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=int
+          ]
+          and
+          [
+              TYPE=float
+          ]
+C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(94,30): warning C4244: 'argumento': conversión de 'TYPE' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=int
+          ]
+          and
+          [
+              TYPE=float
+          ]
+C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(96,18): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(99,70): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(99,47): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(103,138): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(103,96): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(103,57): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(103,34): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+          with
+          [
+              TYPE=float
+          ]
+  SDL Game.vcxproj -> C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\Debug\Box2D - Tutorial.exe
