@@ -277,7 +277,7 @@ void ModulePhysics::CreateScenarioGround()
 		300,0,
 	};
 
-	CreateChain(10, 30, back, 42, map);
+	CreateChain(0, 0, back, 42, map);
 
 }
 

@@ -41,7 +41,7 @@ bool ModuleSceneIntro::Start()
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
 
-	ball = App->physics->CreateCircleDynamic(100, 200, 10);
+	ball = App->physics->CreateCircleDynamic(120, 200, 10);
 	App->physics->CreateCircleStatic(107, 269, 13);
 	App->physics->CreateCircleStatic(186, 267, 13);
 	App->physics->CreateCircleStatic(150, 322, 13);
@@ -50,7 +50,7 @@ bool ModuleSceneIntro::Start()
 
 	right = App->physics->CreateRectangle(0, 500, 84, 20);
 
-	point_right = App->physics->CreateCircleStatic(236, 589, 5);
+	point_right = App->physics->CreateCircleStatic(226, 559, 5);
 
 	Joint_right.bodyA = right->body;
 	Joint_right.bodyB = point_right->body;
@@ -66,7 +66,7 @@ bool ModuleSceneIntro::Start()
 
 	left = App->physics->CreateRectangle(0, 500, 84, 20);
 
-	point_left = App->physics->CreateCircleStatic(82, 589, 5);
+	point_left = App->physics->CreateCircleStatic(72, 559, 5);
 
 	Joint_left.bodyA = left->body;
 	Joint_left.bodyB = point_left->body;
@@ -92,7 +92,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 
-	App->renderer->Blit(box, 10, 30);
+	App->renderer->Blit(box, 0, 0);
 
 	// If user presses SPACE, enable RayCast
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
