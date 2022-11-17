@@ -31,9 +31,7 @@ bool ModuleSceneIntro::Start()
 
 	// Load textures
 	circle = App->textures->Load("pinball/wheel.png"); 
-	box = App->textures->Load("pinball/crate.png");
-	rick = App->textures->Load("pinball/rick_head.png");
-	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+	box = App->textures->Load("pinball/Pinball.png");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -48,6 +46,43 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateCircleStatic(186, 267, 13);
 	App->physics->CreateCircleStatic(150, 322, 13);
 
+	//Right 
+
+	right = App->physics->CreateRectangle(0, 500, 84, 20);
+
+
+
+	point_right = App->physics->CreateCircleStatic(236, 589, 5);
+
+	revoluteJointDef_right.bodyA = right->body;
+	revoluteJointDef_right.bodyB = point_right->body;
+	revoluteJointDef_right.referenceAngle = 0 * DEGTORAD;
+	revoluteJointDef_right.enableLimit = true;
+	revoluteJointDef_right.lowerAngle = -30 * DEGTORAD;
+	revoluteJointDef_right.upperAngle = 25 * DEGTORAD;
+	revoluteJointDef_right.localAnchorA.Set(PIXEL_TO_METERS(30), 0);
+	revoluteJointDef_right.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_right = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_right);
+
+	//Left
+
+	left = App->physics->CreateRectangle(0, 500, 84, 20);
+
+
+
+	point_left = App->physics->CreateCircleStatic(82, 589, 5);
+
+	revoluteJointDef_left.bodyA = left->body;
+	revoluteJointDef_left.bodyB = point_left->body;
+	revoluteJointDef_left.referenceAngle = 0 * DEGTORAD;
+	revoluteJointDef_left.enableLimit = true;
+	revoluteJointDef_left.lowerAngle = -25 * DEGTORAD;
+	revoluteJointDef_left.upperAngle = 25 * DEGTORAD;
+	revoluteJointDef_left.localAnchorA.Set(PIXEL_TO_METERS(-30), 0);
+	revoluteJointDef_left.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_left = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_left);
+
+
 	return ret;
 }
 
@@ -60,6 +95,9 @@ bool ModuleSceneIntro::CleanUp()
 
 update_status ModuleSceneIntro::Update()
 {
+
+	App->renderer->Blit(box, 10, 30);
+
 	// If user presses SPACE, enable RayCast
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
@@ -71,10 +109,6 @@ update_status ModuleSceneIntro::Update()
 		ray.y = App->input->GetMouseY();
 	}
 
-	// Prepare for raycast ------------------------------------------------------
-	int x, y;
-	ball->GetPosition(x, y);
-	App->renderer->Blit(circle, x, y);
 
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
@@ -87,20 +121,15 @@ update_status ModuleSceneIntro::Update()
 	// Declare a vector. We will draw the normal to the hit surface (if we hit something)
 	fVector normal(0.0f, 0.0f);
 
-	// Raycasts -----------------
-	if(ray_on == true)
-	{
-		// Compute the vector from the raycast origin up to the contact point (if we're hitting anything; otherwise this is the reference length)
-		fVector destination(mouse.x-ray.x, mouse.y-ray.y);
-		destination.Normalize();
-		destination *= ray_hit;
-
-		// Draw a line from origin to the hit point (or reference length if we are not hitting anything)
-		App->renderer->DrawLine(ray.x, ray.y, ray.x + destination.x, ray.y + destination.y, 255, 255, 255);
-
-		// If we are hitting something with the raycast, draw the normal vector to the contact point
-		if(normal.x != 0.0f)
-			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		b2Vec2 force = b2Vec2(0, -200);
+		right->body->ApplyForceToCenter(force, 1);
+		revoluteJointDef_right.lowerAngle = 30 * DEGTORAD;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		b2Vec2 force = b2Vec2(0, -200);
+		left->body->ApplyForceToCenter(force, 1);
+		revoluteJointDef_left.lowerAngle = 30 * DEGTORAD;
 	}
 
 	// Keep playing

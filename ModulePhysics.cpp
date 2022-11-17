@@ -254,29 +254,29 @@ void ModulePhysics::CreateScenarioGround()
 	map.type = b2_staticBody;
 	b2Body* square = world->CreateBody(&map);
 
-	int back[8] = {
-			10, 30,
-			310, 30,
-			310, 730,
-			10, 730,
+	int back[40] = {
+		12,617,
+		12,450,
+		48,450,
+		48,329,
+		30,291,
+		12,243,
+		13,212,
+		26,171,
+		50,134,
+		74,111,
+		110,93,
+		150,87,
+		194,93,
+		235,113,
+		258,135,
+		279,164,
+		291,193,
+		300,228,
+		300,617,
 	};
 
-	b2BodyDef pala;
-	pala.type = b2_dynamicBody;
-	b2Body* palas = world->CreateBody(&pala);
-
-	int palashape[8] = {
-			0, 0,
-			60, 0,
-			60, 30,
-			0, 30,
-
-	};
-
-	CreateCircleStatic(100, 120, 10);
-	CreateChain(100, 100, palashape, 8, pala);
-	CreateChain(0, 0, back, 8, map);
-
+	CreateChain(10, 30, back, 40, map);
 
 }
 

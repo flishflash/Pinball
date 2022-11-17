@@ -1,5 +1,6 @@
 #pragma once
 #include "Module.h"
+#include "ModulePhysics.h"
 #include "p2List.h"
 #include "p2Point.h"
 #include "Globals.h"
@@ -33,6 +34,14 @@ public:
 	SDL_Texture* circle;
 	SDL_Texture* box;
 	SDL_Texture* rick;
+	//palas
+
+	PhysBody* right;
+	PhysBody* point_right;
+	PhysBody* left;
+	PhysBody* point_left;
+	b2RevoluteJointDef revoluteJointDef_right;
+	b2RevoluteJointDef revoluteJointDef_left;
 
 	// FX
 	uint bonus_fx;
