@@ -40,8 +40,8 @@ public:
 	PhysBody* point_right;
 	PhysBody* left;
 	PhysBody* point_left;
-	b2RevoluteJointDef revoluteJointDef_right;
-	b2RevoluteJointDef revoluteJointDef_left;
+	b2RevoluteJointDef Joint_right;
+	b2RevoluteJointDef Joint_left;
 
 	// FX
 	uint bonus_fx;

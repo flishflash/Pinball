@@ -50,37 +50,33 @@ bool ModuleSceneIntro::Start()
 
 	right = App->physics->CreateRectangle(0, 500, 84, 20);
 
-
-
 	point_right = App->physics->CreateCircleStatic(236, 589, 5);
 
-	revoluteJointDef_right.bodyA = right->body;
-	revoluteJointDef_right.bodyB = point_right->body;
-	revoluteJointDef_right.referenceAngle = 0 * DEGTORAD;
-	revoluteJointDef_right.enableLimit = true;
-	revoluteJointDef_right.lowerAngle = -30 * DEGTORAD;
-	revoluteJointDef_right.upperAngle = 25 * DEGTORAD;
-	revoluteJointDef_right.localAnchorA.Set(PIXEL_TO_METERS(30), 0);
-	revoluteJointDef_right.localAnchorB.Set(0, 0);
-	b2RevoluteJoint* joint_right = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_right);
+	Joint_right.bodyA = right->body;
+	Joint_right.bodyB = point_right->body;
+	Joint_right.referenceAngle = 0 * DEGTORAD;
+	Joint_right.enableLimit = true;
+	Joint_right.lowerAngle = -30 * DEGTORAD;
+	Joint_right.upperAngle = 25 * DEGTORAD;
+	Joint_right.localAnchorA.Set(PIXEL_TO_METERS(30), 0);
+	Joint_right.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_right = (b2RevoluteJoint*)App->physics->world->CreateJoint(&Joint_right);
 
 	//Left
 
 	left = App->physics->CreateRectangle(0, 500, 84, 20);
 
-
-
 	point_left = App->physics->CreateCircleStatic(82, 589, 5);
 
-	revoluteJointDef_left.bodyA = left->body;
-	revoluteJointDef_left.bodyB = point_left->body;
-	revoluteJointDef_left.referenceAngle = 0 * DEGTORAD;
-	revoluteJointDef_left.enableLimit = true;
-	revoluteJointDef_left.lowerAngle = -25 * DEGTORAD;
-	revoluteJointDef_left.upperAngle = 25 * DEGTORAD;
-	revoluteJointDef_left.localAnchorA.Set(PIXEL_TO_METERS(-30), 0);
-	revoluteJointDef_left.localAnchorB.Set(0, 0);
-	b2RevoluteJoint* joint_left = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_left);
+	Joint_left.bodyA = left->body;
+	Joint_left.bodyB = point_left->body;
+	Joint_left.referenceAngle = 0 * DEGTORAD;
+	Joint_left.enableLimit = true;
+	Joint_left.lowerAngle = -25 * DEGTORAD;
+	Joint_left.upperAngle = 25 * DEGTORAD;
+	Joint_left.localAnchorA.Set(PIXEL_TO_METERS(-30), 0);
+	Joint_left.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_left = (b2RevoluteJoint*)App->physics->world->CreateJoint(&Joint_left);
 
 
 	return ret;
