@@ -120,12 +120,12 @@ update_status ModuleSceneIntro::Update()
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		b2Vec2 force = b2Vec2(0, -200);
 		right->body->ApplyForceToCenter(force, 1);
-		revoluteJointDef_right.lowerAngle = 30 * DEGTORAD;
+		Joint_right.lowerAngle = 30 * DEGTORAD;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		b2Vec2 force = b2Vec2(0, -200);
 		left->body->ApplyForceToCenter(force, 1);
-		revoluteJointDef_left.lowerAngle = 30 * DEGTORAD;
+		Joint_left.lowerAngle = 30 * DEGTORAD;
 	}
 
 	// Keep playing
