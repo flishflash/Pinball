@@ -254,7 +254,7 @@ void ModulePhysics::CreateScenarioGround()
 	map.type = b2_staticBody;
 	b2Body* square = world->CreateBody(&map);
 
-	int back[40] = {
+	int back[42] = {
 		12,617,
 		12,450,
 		48,450,
@@ -274,9 +274,10 @@ void ModulePhysics::CreateScenarioGround()
 		291,193,
 		300,228,
 		300,617,
+		300,0,
 	};
 
-	CreateChain(10, 30, back, 40, map);
+	CreateChain(10, 30, back, 42, map);
 
 }
 
