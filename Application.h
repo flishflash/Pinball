@@ -11,7 +11,11 @@ class ModuleInput;
 class ModuleAudio;
 class ModulePlayer;
 class ModuleSceneIntro;
+class Intro;
+class Die;
 class ModulePhysics;
+class FadeToBlack;
+
 
 class Application
 {
@@ -19,11 +23,15 @@ public:
 	ModuleRender* renderer;
 	ModuleWindow* window;
 	ModuleTextures* textures;
+	FadeToBlack* fadetoblack;
 	ModuleInput* input;
 	ModuleAudio* audio;
 	ModulePlayer* player;
+	Intro* intro;
 	ModuleSceneIntro* scene_intro;
+	Die* die;
 	ModulePhysics* physics;
+	
 
 private:
 

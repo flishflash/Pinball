@@ -6,8 +6,9 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "FadeToBlack.h"
 
-ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_disabled) : Module(app, start_disabled)
 {
 
 	// Initialise all the internal class variables, at least to NULL pointer
@@ -134,8 +135,8 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	// Play Audio FX on every collision, regardless of who is colliding
-	App->audio->PlayFx(bonus_fx);
-
-	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
+	if (bodyB->body->GetType() == lower_ground_sensor->body->GetType())
+	{
+		App->fadetoblack->FadeToblack(this, (Module*)App->die, 50);
+	}
 }
