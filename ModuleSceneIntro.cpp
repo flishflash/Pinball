@@ -27,6 +27,9 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	delete ball;
+	ball = NULL;
+
 	// Set camera position
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -138,5 +141,14 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyB->body->GetType() == lower_ground_sensor->body->GetType())
 	{
 		App->fadetoblack->FadeToblack(this, (Module*)App->die, 50);
+
+		delete left;
+		left = NULL;
+		delete right;
+		right = NULL;
+		delete point_left;
+		point_left = NULL;
+		delete point_right;
+		point_right = NULL;
 	}
 }

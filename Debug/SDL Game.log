@@ -1,2 +1,10 @@
-﻿  ModuleSceneIntro.cpp
+﻿  ModulePhysics.cpp
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(374,23): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(375,25): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(427,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(530,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(531,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(537,27): warning C4244: 'return': conversión de 'float32' a 'int'; posible pérdida de datos
+  ModuleSceneIntro.cpp
+  Generando código...
   SDL Game.vcxproj -> C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\Debug\Box2D - Tutorial.exe
