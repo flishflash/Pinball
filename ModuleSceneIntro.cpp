@@ -39,7 +39,7 @@ bool ModuleSceneIntro::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	// Load textures
-	circle = App->textures->Load("pinball/wheel.png"); 
+	circle = App->textures->Load("pinball/BolaPinball_.png"); 
 	box = App->textures->Load("pinball/Pinball.png");
 	palaL = App->textures->Load("pinball/Pala_izq.png");
 	palaR = App->textures->Load("pinball/Pala_der.png");
@@ -139,7 +139,7 @@ update_status ModuleSceneIntro::Update()
 
 		App->renderer->Blit(palaR, 152, 545, NULL, 1.0f, right->GetRotation()+5, 74, 13);
 
-		App->renderer->Blit(circle, METERS_TO_PIXELS(ball->body->GetPosition().x), METERS_TO_PIXELS(ball->body->GetPosition().y), NULL, 1.0f, ball->GetRotation());
+		App->renderer->Blit(circle, METERS_TO_PIXELS(ball->body->GetPosition().x-10), METERS_TO_PIXELS(ball->body->GetPosition().y-10), NULL, 1.0f, ball->GetRotation());
 
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 			b2Vec2 force = b2Vec2(0, -200);
