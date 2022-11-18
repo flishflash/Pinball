@@ -31,8 +31,7 @@ bool ModuleSceneIntro::Start()
 
 	vidas = 3;
 
-	/*delete ball;
-	ball[2] = NULL;*/
+	resetPos = { 120,200 };
 
 	vida = false;
 
@@ -68,7 +67,7 @@ bool ModuleSceneIntro::Start()
 	Joint_right.bodyB = point_right->body;
 	Joint_right.referenceAngle = 0 * DEGTORAD;
 	Joint_right.enableLimit = true;
-	Joint_right.lowerAngle = -30 * DEGTORAD;
+	Joint_right.lowerAngle = -25 * DEGTORAD;
 	Joint_right.upperAngle = 25 * DEGTORAD;
 	Joint_right.localAnchorA.Set(PIXEL_TO_METERS(30), 0);
 	Joint_right.localAnchorB.Set(0, 0);
@@ -130,9 +129,17 @@ update_status ModuleSceneIntro::Update()
 	fVector normal(0.0f, 0.0f);
 	if (died == false)
 	{
-		App->renderer->Blit(palaL, 59, 545, NULL, 1.0f, left->GetRotation()-5, 13, 13);
+		if (vida == true)
+		{
+			ball->body->SetTransform(PIXEL_TO_METERS(resetPos), NULL);
+			vida = false;
+		}
+
+		App->renderer->Blit(palaL, 58, 545, NULL, 1.0f, left->GetRotation()-5, 13, 13);
 
 		App->renderer->Blit(palaR, 152, 545, NULL, 1.0f, right->GetRotation()+5, 74, 13);
+
+		App->renderer->Blit(circle, METERS_TO_PIXELS(ball->body->GetPosition().x), METERS_TO_PIXELS(ball->body->GetPosition().y), NULL, 1.0f, ball->GetRotation());
 
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 			b2Vec2 force = b2Vec2(0, -200);
@@ -151,9 +158,9 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+
 	if (vidas >= 0)
 	{
-		//ball->body->SetTransform(b2Vec2(120.0f, 200.0f), ball->body->GetAngle());
 		if (vida==false)
 		{
 			vidas--;
@@ -161,6 +168,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			LOG("vidas: %d", vidas);
 		}
 	}
+
 	if (bodyB->body->GetType() == lower_ground_sensor->body->GetType() && vidas <= 0)
 	{
 		died = true;

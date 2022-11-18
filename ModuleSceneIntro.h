@@ -55,5 +55,6 @@ public:
 	bool died = false;
 	int vidas = 3;
 	bool vida;
+	b2Vec2 resetPos;
 
 };
