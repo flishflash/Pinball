@@ -12,7 +12,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_disabled) : Modu
 {
 
 	// Initialise all the internal class variables, at least to NULL pointer
-	circle = box = rick = NULL;
+	circle = box = NULL;
 	ray_on = false;
 	sensed = false;
 }
@@ -27,6 +27,8 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	died = false;
+
 	delete ball;
 	ball = NULL;
 
@@ -36,6 +38,8 @@ bool ModuleSceneIntro::Start()
 	// Load textures
 	circle = App->textures->Load("pinball/wheel.png"); 
 	box = App->textures->Load("pinball/Pinball.png");
+	palaL = App->textures->Load("pinball/Pala_izq.png");
+	palaR = App->textures->Load("pinball/Pala_der.png");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -52,7 +56,7 @@ bool ModuleSceneIntro::Start()
 
 	//Right 
 
-	right = App->physics->CreateRectangle(0, 500, 84, 20);
+	right = App->physics->CreateRectangle(226, 559, 84, 20);
 
 	point_right = App->physics->CreateCircleStatic(226, 559, 5);
 
@@ -68,7 +72,7 @@ bool ModuleSceneIntro::Start()
 
 	//Left
 
-	left = App->physics->CreateRectangle(0, 500, 84, 20);
+	left = App->physics->CreateRectangle(72, 559, 84, 20);
 
 	point_left = App->physics->CreateCircleStatic(72, 559, 5);
 
@@ -120,18 +124,24 @@ update_status ModuleSceneIntro::Update()
 
 	// Declare a vector. We will draw the normal to the hit surface (if we hit something)
 	fVector normal(0.0f, 0.0f);
+	if (died == false)
+	{
+		
+		App->renderer->Blit(palaL, 59, 545, NULL, 1.0f, left->GetRotation()-5, 13, 13);
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		b2Vec2 force = b2Vec2(0, -200);
-		right->body->ApplyForceToCenter(force, 1);
-		Joint_right.lowerAngle = 30 * DEGTORAD;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		b2Vec2 force = b2Vec2(0, -200);
-		left->body->ApplyForceToCenter(force, 1);
-		Joint_left.lowerAngle = 30 * DEGTORAD;
-	}
+		App->renderer->Blit(palaR, 152, 545, NULL, 1.0f, right->GetRotation()+5, 74, 13);
 
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+			b2Vec2 force = b2Vec2(0, -200);
+			right->body->ApplyForceToCenter(force, 1);
+			Joint_right.lowerAngle = 25 * DEGTORAD;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+			b2Vec2 force = b2Vec2(0, -200);
+			left->body->ApplyForceToCenter(force, 1);
+			Joint_left.lowerAngle = 25 * DEGTORAD;
+		}
+	}
 	// Keep playing
 	return UPDATE_CONTINUE;
 }
@@ -140,6 +150,8 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	if (bodyB->body->GetType() == lower_ground_sensor->body->GetType())
 	{
+		died = true;
+
 		App->fadetoblack->FadeToblack(this, (Module*)App->die, 50);
 
 		delete left;

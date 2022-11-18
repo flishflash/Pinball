@@ -33,9 +33,10 @@ public:
 	// Textures
 	SDL_Texture* circle;
 	SDL_Texture* box;
-	SDL_Texture* rick;
-	//palas
+	SDL_Texture* palaR;
+	SDL_Texture* palaL;
 
+	//palas
 	PhysBody* right;
 	PhysBody* point_right;
 	PhysBody* left;
@@ -49,4 +50,8 @@ public:
 	// Raycast
 	p2Point<int> ray;
 	bool ray_on;
+
+	//plus
+	bool died = false;
+
 };
