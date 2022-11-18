@@ -29,8 +29,12 @@ bool ModuleSceneIntro::Start()
 
 	died = false;
 
-	delete ball;
-	ball = NULL;
+	vidas = 3;
+
+	/*delete ball;
+	ball[2] = NULL;*/
+
+	vida = false;
 
 	// Set camera position
 	App->renderer->camera.x = App->renderer->camera.y = 0;
@@ -43,7 +47,7 @@ bool ModuleSceneIntro::Start()
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
-	lower_ground_sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
+	lower_ground_sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT+25, SCREEN_WIDTH, 10);
 
 	// Add this module (ModuleSceneIntro) as a listener for collisions with the sensor.
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
@@ -126,7 +130,6 @@ update_status ModuleSceneIntro::Update()
 	fVector normal(0.0f, 0.0f);
 	if (died == false)
 	{
-		
 		App->renderer->Blit(palaL, 59, 545, NULL, 1.0f, left->GetRotation()-5, 13, 13);
 
 		App->renderer->Blit(palaR, 152, 545, NULL, 1.0f, right->GetRotation()+5, 74, 13);
@@ -148,7 +151,17 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	if (bodyB->body->GetType() == lower_ground_sensor->body->GetType())
+	if (vidas >= 0)
+	{
+		//ball->body->SetTransform(b2Vec2(120.0f, 200.0f), ball->body->GetAngle());
+		if (vida==false)
+		{
+			vidas--;
+			vida = true;
+			LOG("vidas: %d", vidas);
+		}
+	}
+	if (bodyB->body->GetType() == lower_ground_sensor->body->GetType() && vidas <= 0)
 	{
 		died = true;
 

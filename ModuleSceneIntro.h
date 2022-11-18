@@ -53,5 +53,7 @@ public:
 
 	//plus
 	bool died = false;
+	int vidas = 3;
+	bool vida;
 
 };
