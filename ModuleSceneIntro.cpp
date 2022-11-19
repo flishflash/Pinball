@@ -31,7 +31,7 @@ bool ModuleSceneIntro::Start()
 
 	vidas = 3;
 
-	resetPos = { 120,200 };
+	resetPos = { 291, 480 };
 
 	vida = false;
 
@@ -43,6 +43,8 @@ bool ModuleSceneIntro::Start()
 	box = App->textures->Load("pinball/Pinball.png");
 	palaL = App->textures->Load("pinball/Pala_izq.png");
 	palaR = App->textures->Load("pinball/Pala_der.png");
+	Muelle = App->textures->Load("pinball/Pinball_spring.png");
+	Muellent = App->textures->Load("pinball/FIUYM_spring.png");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -52,10 +54,19 @@ bool ModuleSceneIntro::Start()
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
 
-	ball = App->physics->CreateCircleDynamic(120, 200, 10);
+	ball = App->physics->CreateCircleDynamic(291, 480, 10);
 	App->physics->CreateCircleStatic(107, 269, 13);
 	App->physics->CreateCircleStatic(186, 267, 13);
 	App->physics->CreateCircleStatic(150, 322, 13);
+
+	//MuelleInit
+	initMPos = { 283, 573 };
+	initMaxPos = { 288, 590 };
+	muelle = App->physics->CreateRectangle(283, 573, 20, 7);
+	muelle_max = App->physics->CreateRectangle(288, 590, 20, 7);
+	muelle->body->SetType(b2_dynamicBody);
+	muelle_max->body->SetType(b2_staticBody);
+	muelle_max->body->SetFixedRotation(true);
 
 	//Right 
 
@@ -102,20 +113,26 @@ bool ModuleSceneIntro::CleanUp()
 
 update_status ModuleSceneIntro::Update()
 {
-
+	
 	App->renderer->Blit(box, 0, 0);
+	if (died==false)
+	{
+		App->renderer->Blit(Muelle, METERS_TO_PIXELS(muelle_max->body->GetPosition().x) - 10, METERS_TO_PIXELS(muelle_max->body->GetPosition().y) - 10);
+	}
+	App->renderer->Blit(Muellent, 277, 619);
 
 	// If user presses SPACE, enable RayCast
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && METERS_TO_PIXELS(muelle_max->body->GetPosition().y) <= 607)
 	{
-		// Enable raycast mode
-		ray_on = !ray_on;
-
-		// Origin point of the raycast is be the mouse current position now (will not change)
-		ray.x = App->input->GetMouseX();
-		ray.y = App->input->GetMouseY();
+		b2Vec2 almuerzo = { muelle_max->body->GetPosition().x, muelle_max->body->GetPosition().y + 0.005f};
+		muelle_max->body->SetTransform(almuerzo, 0);
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	{
+		b2Vec2 iner = { 0, -((muelle_max->body->GetPosition().y-PIXEL_TO_METERS(initMPos.y))+5) };
+		b2Vec2 centre = { muelle->body->GetLocalCenter() };
+		muelle->body->ApplyLinearImpulse(PIXEL_TO_METERS(iner), centre, true);
+	}
 
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
@@ -131,6 +148,8 @@ update_status ModuleSceneIntro::Update()
 	{
 		if (vida == true)
 		{
+			muelle->body->SetTransform(PIXEL_TO_METERS(initMPos), 0);
+			muelle_max->body->SetTransform(PIXEL_TO_METERS(initMaxPos), 0);
 			ball->body->SetTransform(PIXEL_TO_METERS(resetPos), NULL);
 			vida = false;
 		}
@@ -167,6 +186,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			vida = true;
 			LOG("vidas: %d", vidas);
 		}
+
 	}
 
 	if (bodyB->body->GetType() == lower_ground_sensor->body->GetType() && vidas <= 0)
@@ -175,6 +195,10 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 		App->fadetoblack->FadeToblack(this, (Module*)App->die, 50);
 
+		delete muelle;
+		muelle = NULL;
+		delete muelle_max;
+		muelle_max = NULL;
 		delete left;
 		left = NULL;
 		delete right;

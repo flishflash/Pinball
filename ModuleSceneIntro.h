@@ -35,8 +35,12 @@ public:
 	SDL_Texture* box;
 	SDL_Texture* palaR;
 	SDL_Texture* palaL;
+	SDL_Texture* Muelle;
+	SDL_Texture* Muellent;
 
 	//palas
+	PhysBody* muelle;
+	PhysBody* muelle_max;
 	PhysBody* right;
 	PhysBody* point_right;
 	PhysBody* left;
@@ -56,5 +60,7 @@ public:
 	int vidas = 3;
 	bool vida;
 	b2Vec2 resetPos;
+	b2Vec2 initMPos;
+	b2Vec2 initMaxPos;
 
 };
