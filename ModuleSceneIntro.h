@@ -37,6 +37,8 @@ public:
 	SDL_Texture* palaL;
 	SDL_Texture* Muelle;
 	SDL_Texture* Muellent;
+	SDL_Texture* Tri_izq;
+	SDL_Texture* Tri_der;
 
 	//palas
 	PhysBody* muelle;

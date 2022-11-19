@@ -45,6 +45,8 @@ bool ModuleSceneIntro::Start()
 	palaR = App->textures->Load("pinball/Pala_der.png");
 	Muelle = App->textures->Load("pinball/Pinball_spring.png");
 	Muellent = App->textures->Load("pinball/FIUYM_spring.png");
+	Tri_izq = App->textures->Load("pinball/Collider_triangular_izq.png");
+	Tri_der = App->textures->Load("pinball/Collider_triangular_der.png");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -115,6 +117,7 @@ update_status ModuleSceneIntro::Update()
 {
 	
 	App->renderer->Blit(box, 0, 0);
+
 	if (died==false)
 	{
 		App->renderer->Blit(Muelle, METERS_TO_PIXELS(muelle_max->body->GetPosition().x) - 10, METERS_TO_PIXELS(muelle_max->body->GetPosition().y) - 10);
