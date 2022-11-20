@@ -58,6 +58,8 @@ public:
 
 	// FX
 	uint bonus_fx;
+	uint boing;
+	uint palanca;
 
 	// Raycast
 	p2Point<int> ray;
