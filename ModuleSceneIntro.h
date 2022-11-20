@@ -70,4 +70,12 @@ public:
 	bool der = false;
 	bool izq = false;
 
+	// Font score index
+	uint score = 000;
+	int scoreFont = -1;
+	char scoreText[10] = { "\0" };
+
+	uint highscore = 000;
+	char HighscoreText[10] = { "\0" };
+
 };

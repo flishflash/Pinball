@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 #include "FadeToBlack.h"
+#include "ModuleFonts.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_disabled) : Module(app, start_disabled)
 {
@@ -64,6 +65,14 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateCircleStatic(186, 267, 13);
 	App->physics->CreateCircleStatic(150, 322, 13);
 
+	vanish_izq = App->physics->CreateRectangleSensor(46, 279, 10, 50);
+	vanish_izq->body->SetTransform(vanish_izq->body->GetPosition(), vanish_izq->body->GetAngle()+2.7f);
+	vanish_izq->listener = this;
+
+	vanish_der = App->physics->CreateRectangleSensor(248, 279, 10, 50);
+	vanish_der->body->SetTransform(vanish_der->body->GetPosition(), vanish_der->body->GetAngle() - 2.75f);
+	vanish_der->listener = this;
+
 	//MuelleInit
 	initMPos = { 283, 573 };
 	initMaxPos = { 288, 590 };
@@ -105,6 +114,8 @@ bool ModuleSceneIntro::Start()
 	Joint_left.localAnchorB.Set(0, 0);
 	b2RevoluteJoint* joint_left = (b2RevoluteJoint*)App->physics->world->CreateJoint(&Joint_left);
 
+	char lookupTable[] = { "0123456789abcdefghijklmnopqrstuvwxyz.@'&- " };
+	scoreFont = App->fonts->Load("pinball/ui_font.png", lookupTable, 1);
 	return ret;
 }
 
@@ -124,9 +135,8 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(Boing, 186-13, 267-13);
 	App->renderer->Blit(Boing, 150-13, 322-13);
 
-	if (vidas>=1) App->renderer->Blit(circle, 30 - 13, 658 - 13);
-	if (vidas>=2) App->renderer->Blit(circle, 55 - 13, 658 - 13);
-	if (vidas==3) App->renderer->Blit(circle, 80 - 13, 658 - 13);
+	if (izq == false) App->renderer->Blit(Vanish_izq, METERS_TO_PIXELS(vanish_izq->body->GetPosition().x)-29, METERS_TO_PIXELS(vanish_izq->body->GetPosition().y)-5, NULL, NULL, -30);
+	if(der==false) App->renderer->Blit(Vanish_der, METERS_TO_PIXELS(vanish_der->body->GetPosition().x)-24, METERS_TO_PIXELS(vanish_der->body->GetPosition().y)-7, NULL, NULL, 22);
 
 	if (died==false)
 	{
@@ -205,10 +215,22 @@ update_status ModuleSceneIntro::Update()
 		delete point_right;
 		point_right = NULL;
 	}
+	sprintf_s(scoreText, 10, "%7d", score);
+	sprintf_s(HighscoreText, 10, "%7d", highscore);
 
-	App->renderer->Blit(Vanish_izq, 46 - 29, 279 - 5, NULL, NULL, -30);
-	App->renderer->Blit(Vanish_der, 248 - 24, 279 - 7, NULL, NULL, 22);
+	App->fonts->BlitText(10, 35, scoreFont, scoreText);
 
+	App->fonts->BlitText(75, 35, scoreFont, "hi");
+
+	//highscore
+	if (score > highscore)
+	{
+		highscore = score;  
+	}
+	App->fonts->BlitText(107, 35, scoreFont, HighscoreText);
+
+
+	// Keep playing
 	return UPDATE_CONTINUE;
 }
 
@@ -226,6 +248,18 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 
 	}
+
+	if (bodyB->body->GetPosition() == vanish_izq->body->GetPosition())
+	{
+		izq = true;
+	}
+
+	if (bodyB->body->GetPosition() == vanish_der->body->GetPosition())
+	{
+		der = true;
+	}
+
+
 
 	if (bodyB->body->GetPosition() == lower_ground_sensor->body->GetPosition() && vidas <= 0)
 	{

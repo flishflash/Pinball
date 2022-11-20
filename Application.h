@@ -15,6 +15,7 @@ class Intro;
 class Die;
 class ModulePhysics;
 class FadeToBlack;
+class ModuleFonts;
 
 
 class Application
@@ -31,6 +32,7 @@ public:
 	ModuleSceneIntro* scene_intro;
 	Die* die;
 	ModulePhysics* physics;
+	ModuleFonts* fonts;
 	
 
 private:
