@@ -36,7 +36,9 @@ bool ModuleSceneIntro::Start()
 
 	vida = false;
 
-	der, izq = false;
+	brilla_1 = false;
+	brilla_2 = false;
+	brilla_3 = false;
 
 	// Set camera position
 	App->renderer->camera.x = App->renderer->camera.y = 0;
@@ -51,6 +53,7 @@ bool ModuleSceneIntro::Start()
 	Vanish_izq = App->textures->Load("pinball/VanishCollider_izq.png");
 	Vanish_der = App->textures->Load("pinball/VanishCollider_der.png");
 	Boing = App->textures->Load("pinball/Collider_Star.png");
+	Boing_Star = App->textures->Load("pinball/Collider_Star_Brillando.png");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -121,8 +124,8 @@ bool ModuleSceneIntro::Start()
 	Joint_left.localAnchorB.Set(0, 0);
 	b2RevoluteJoint* joint_left = (b2RevoluteJoint*)App->physics->world->CreateJoint(&Joint_left);
 
-	char lookupTable[] = { "0123456789abcdefghijklmnopqrstuvwxyz.@'&- " };
-	scoreFont = App->fonts->Load("pinball/ui_font.png", lookupTable, 1);
+	char lookupTable[] = { "ABCDEFGHIJKLNOPKRSTUVXYZ0123456789: " };
+	scoreFont = App->fonts->Load("pinball/ABC.png", lookupTable, 1);
 	return ret;
 }
 
@@ -145,6 +148,22 @@ update_status ModuleSceneIntro::Update()
 	if (vidas == 3) App->renderer->Blit(circle, 80, 658);
 	if (vidas >= 2) App->renderer->Blit(circle, 55, 658);
 	if (vidas >= 1) App->renderer->Blit(circle, 30, 658);
+
+	if (brilla_1)
+	{
+		App->renderer->Blit(Boing_Star, 107 - 13, 269 - 13);
+		brilla_1 = false;
+	}
+	if (brilla_2)
+	{
+		App->renderer->Blit(Boing_Star, 186 - 13, 267 - 13);
+		brilla_2 = false;
+	}
+	if (brilla_3)
+	{
+		App->renderer->Blit(Boing_Star, 150 - 13, 322 - 13);
+		brilla_3 = false;
+	}
 
 	if (died==false)
 	{
@@ -228,7 +247,7 @@ update_status ModuleSceneIntro::Update()
 
 	App->fonts->BlitText(10, 35, scoreFont, scoreText);
 
-	App->fonts->BlitText(75, 35, scoreFont, "hi");
+	App->fonts->BlitText(75, 35, scoreFont, "HI");
 
 	//highscore
 	if (score > highscore)
@@ -257,13 +276,14 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			vidas--;
 			vida = true;
 			LOG("vidas: %d", vidas);
-			izq = false;
-			der = false;
 		}
 
 	}
 	if (bodyB == sc1 || bodyB == sc2 || bodyB == sc3) {
 		score += 50;
+		if (bodyB == sc1) brilla_1 = true;
+		if (bodyB == sc2) brilla_2 = true;
+		if (bodyB == sc3) brilla_3 = true;
 	}
 	if (bodyB == sp1 || bodyB == sp2) {
 		score += 75;

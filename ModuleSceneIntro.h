@@ -40,6 +40,7 @@ public:
 	SDL_Texture* Vanish_izq;
 	SDL_Texture* Vanish_der;
 	SDL_Texture* Boing;
+	SDL_Texture* Boing_Star;
 
 	//palas
 	PhysBody* muelle;
@@ -77,8 +78,9 @@ public:
 	b2Vec2 resetPos;
 	b2Vec2 initMPos;
 	b2Vec2 initMaxPos;
-	bool der = false;
-	bool izq = false;
+	bool brilla_1 = false;
+	bool brilla_2 = false;
+	bool brilla_3 = false;
 
 	// Font score index
 	uint score = 000;

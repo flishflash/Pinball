@@ -1,4 +1,4 @@
 ﻿  ModuleSceneIntro.cpp
-C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(68,59): warning C4305: 'argumento': truncamiento de 'double' a 'float32'
-C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(71,58): warning C4305: 'argumento': truncamiento de 'double' a 'float32'
-  SDL Game.vcxproj -> C:\Users\greem\OneDrive\Documentos\GitHub\Pinball\Debug\Box2D - Tutorial.exe
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(71,59): warning C4305: 'argumento': truncamiento de 'double' a 'float32'
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(74,58): warning C4305: 'argumento': truncamiento de 'double' a 'float32'
+  SDL Game.vcxproj -> C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\Debug\Box2D - Tutorial.exe
