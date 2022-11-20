@@ -4,6 +4,8 @@
 #include "FadeToBlack.h"
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
+#include "ModuleSceneIntro.h"
+#include "ModuleFonts.h"
 #include "Die.h"
 
 
@@ -27,6 +29,7 @@ bool Die::Awake()
 bool Die::Start()
 {
 	img = App->textures->Load("pinball/Pinball_DeathScreen.png");
+	init = App->scene_intro;
 
 	return true;
 }
@@ -42,6 +45,9 @@ update_status Die::Update()
 {
 	// Placeholder not needed any more
 	App->renderer->Blit(img, 0, 0);
+
+	App->fonts->BlitText(115, 550, init->scoreFont, init->HighscoreText);
+
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		App->fadetoblack->FadeToblack(this, (Module*)App->scene_intro, 50);
 	}

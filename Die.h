@@ -36,7 +36,7 @@ public:
 
 private:
 	SDL_Texture* img;
-
+	ModuleSceneIntro* init;
 };
 
 #endif // __DIE_H__
