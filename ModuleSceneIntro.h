@@ -65,6 +65,11 @@ public:
 	PhysBody* sc2;
 	PhysBody* sc3;
 
+	PhysBody* sp1;
+	PhysBody* sp2;
+
+	PhysBody* sr;
+
 	//plus
 	bool died = false;
 	int vidas = 3;

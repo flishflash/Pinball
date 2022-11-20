@@ -63,6 +63,14 @@ bool ModuleSceneIntro::Start()
 	sc2->listener = this;
 	sc3 = App->physics->CreateRectangleSensor(150, 322, 27, 27);
 	sc3->listener = this;
+	sp1 = App->physics->CreateRectangleSensor(45, 279, 42, 12);
+	sp1->listener = this;
+	sp1->body->SetTransform(sp1->body->GetPosition(), -0.5235);
+	sp2 = App->physics->CreateRectangleSensor(245, 275, 38, 10);
+	sp2->listener = this;
+	sp2->body->SetTransform(sp2->body->GetPosition(), 0.4235);
+	sr = App->physics->CreateRectangleSensor(45, 390, 13, 100);
+	sr->listener = this;
 	// Add this module (ModuleSceneIntro) as a listener for collisions with the sensor.
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
@@ -255,9 +263,15 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	}
 	if (bodyB == sc1 || bodyB == sc2 || bodyB == sc3) {
-		score += 100;
-		ball->body->ApplyLinearImpulse(b2Vec2{ PIXEL_TO_METERS(20),PIXEL_TO_METERS(20)}, ball->body->GetLocalCenter(), true);
+		score += 50;
 	}
+	if (bodyB == sp1 || bodyB == sp2) {
+		score += 75;
+	}
+	if (bodyB == sr) {
+		score += 5;
+	}
+	
 
 	if (bodyB->body->GetPosition() == lower_ground_sensor->body->GetPosition() && vidas <= 0)
 	{
