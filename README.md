@@ -9,7 +9,7 @@
 
 ## Controls
 
- - Space = Use spring
+ - Space = Use spring & change scene
  - LEFT ARROW = Left lever
  - RIGHT ARROW = Right lever
  - F1 = Debug Mode
