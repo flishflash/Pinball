@@ -60,6 +60,11 @@ public:
 	p2Point<int> ray;
 	bool ray_on;
 
+	//Listeners
+	PhysBody* sc1;
+	PhysBody* sc2;
+	PhysBody* sc3;
+
 	//plus
 	bool died = false;
 	int vidas = 3;

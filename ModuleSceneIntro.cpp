@@ -56,6 +56,13 @@ bool ModuleSceneIntro::Start()
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
 	lower_ground_sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT+25, SCREEN_WIDTH, 10);
 
+	//Listener points
+	sc1 = App->physics->CreateRectangleSensor(107, 269, 27, 27);
+	sc1->listener = this;
+	sc2 = App->physics->CreateRectangleSensor(186, 267, 27, 27);
+	sc2->listener = this;
+	sc3 = App->physics->CreateRectangleSensor(150, 322, 27, 27);
+	sc3->listener = this;
 	// Add this module (ModuleSceneIntro) as a listener for collisions with the sensor.
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
@@ -225,6 +232,10 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(Vanish_izq, 49 - 29, 279 - 5, NULL, NULL, -30);
 	App->renderer->Blit(Vanish_der, 248 - 24, 279 - 7, NULL, NULL, 22);
 
+	if (vidas == 0)
+	{
+		score = 0;
+	}
 	// Keep playing
 	return UPDATE_CONTINUE;
 }
@@ -242,6 +253,10 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			der = false;
 		}
 
+	}
+	if (bodyB == sc1 || bodyB == sc2 || bodyB == sc3) {
+		score += 100;
+		ball->body->ApplyLinearImpulse(b2Vec2{ PIXEL_TO_METERS(20),PIXEL_TO_METERS(20)}, ball->body->GetLocalCenter(), true);
 	}
 
 	if (bodyB->body->GetPosition() == lower_ground_sensor->body->GetPosition() && vidas <= 0)
