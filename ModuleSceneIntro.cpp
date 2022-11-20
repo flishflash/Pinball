@@ -113,7 +113,6 @@ bool ModuleSceneIntro::Start()
 	Joint_left.localAnchorB.Set(0, 0);
 	b2RevoluteJoint* joint_left = (b2RevoluteJoint*)App->physics->world->CreateJoint(&Joint_left);
 
-
 	return ret;
 }
 
@@ -132,6 +131,10 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(Boing, 107-13, 269-13);
 	App->renderer->Blit(Boing, 186-13, 267-13);
 	App->renderer->Blit(Boing, 150-13, 322-13);
+
+	if (vidas>=1) App->renderer->Blit(circle, 30 - 13, 658 - 13);
+	if (vidas>=2) App->renderer->Blit(circle, 55 - 13, 658 - 13);
+	if (vidas==3) App->renderer->Blit(circle, 80 - 13, 658 - 13);
 
 	if (izq == false) App->renderer->Blit(Vanish_izq, METERS_TO_PIXELS(vanish_izq->body->GetPosition().x)-29, METERS_TO_PIXELS(vanish_izq->body->GetPosition().y)-5, NULL, NULL, -30);
 	if(der==false) App->renderer->Blit(Vanish_der, METERS_TO_PIXELS(vanish_der->body->GetPosition().x)-24, METERS_TO_PIXELS(vanish_der->body->GetPosition().y)-7, NULL, NULL, 22);
