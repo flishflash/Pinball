@@ -11,6 +11,7 @@
 #include "FadeToBlack.h"
 #include "Intro.h"
 #include "Die.h"
+#include "ModuleFonts.h"
 
 #include "Application.h"
 
@@ -27,6 +28,7 @@ Application::Application()
 	die = new Die(this);
 	scene_intro = new ModuleSceneIntro(this);
 	physics = new ModulePhysics(this);
+	fonts = new ModuleFonts(this);
 	
 
 	// The order of calls is very important!
@@ -41,6 +43,7 @@ Application::Application()
 	AddModule(fadetoblack);
 	AddModule(input);
 	AddModule(audio);
+	AddModule(fonts);
 	
 	// Scenes
 	AddModule(intro);
