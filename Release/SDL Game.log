@@ -1,0 +1,33 @@
+﻿  Application.cpp
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\Animation.h(55,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  Die.cpp
+  FadeToBlack.cpp
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\FadeToBlack.cpp(80,19): warning C4244: '=': conversión de 'float' a 'Uint32'; posible pérdida de datos
+  Intro.cpp
+  log.cpp
+  Main.cpp
+  ModuleAudio.cpp
+  ModuleFonts.cpp
+  ModuleInput.cpp
+  ModulePhysics.cpp
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(443,23): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(444,25): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(496,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(599,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(600,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModulePhysics.cpp(606,27): warning C4244: 'return': conversión de 'float32' a 'int'; posible pérdida de datos
+  ModulePlayer.cpp
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\Animation.h(55,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  ModuleRender.cpp
+  ModuleSceneIntro.cpp
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(77,59): warning C4305: 'argumento': truncamiento de 'double' a 'float32'
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\ModuleSceneIntro.cpp(80,58): warning C4305: 'argumento': truncamiento de 'double' a 'float32'
+  ModuleTextures.cpp
+  ModuleWindow.cpp
+  Generando código
+  Previous IPDB not found, fall back to full compilation.
+  All 240 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Generación de código finalizada
+  SDL Game.vcxproj -> C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\Release\Box2D - Tutorial.exe
