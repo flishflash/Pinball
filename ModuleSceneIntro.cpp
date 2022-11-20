@@ -43,7 +43,10 @@ bool ModuleSceneIntro::Start()
 
 	// Set camera position
 	App->renderer->camera.x = App->renderer->camera.y = 0;
-
+	//Music and sounds
+	App->audio->LoadFx("pinball/Audio/Boing.ogg");
+	palanca = App->audio->LoadFx("pinball/Audio/Palanca_Mine.ogg");
+	boing = App->audio->PlayMusic("pinball/Audio/Jetpack.ogg");
 	// Load textures
 	circle = App->textures->Load("pinball/BolaPinball_.png"); 
 	box = App->textures->Load("pinball/Pinball.png");
@@ -228,11 +231,13 @@ update_status ModuleSceneIntro::Update()
 			b2Vec2 force = b2Vec2(0, -200);
 			right->body->ApplyForceToCenter(force, 1);
 			Joint_right.lowerAngle = 25 * DEGTORAD;
+			App->audio->PlayFx(palanca);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 			b2Vec2 force = b2Vec2(0, -200);
 			left->body->ApplyForceToCenter(force, 1);
 			Joint_left.lowerAngle = 25 * DEGTORAD;
+			App->audio->PlayFx(palanca);
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
@@ -304,10 +309,12 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyB == st1)
 	{
 		ball->body->ApplyLinearImpulse((b2Vec2{ PIXEL_TO_METERS(5), -PIXEL_TO_METERS(20)}), ball->body->GetLocalCenter(), true);
+		App->audio->PlayFx(boing);
 	}
 	if (bodyB == st2)
 	{
 		ball->body->ApplyLinearImpulse((b2Vec2{ -PIXEL_TO_METERS(5), -PIXEL_TO_METERS(20) }), ball->body->GetLocalCenter(), true);
+		App->audio->PlayFx(boing);
 	}
 
 	if (bodyB->body->GetPosition() == lower_ground_sensor->body->GetPosition() && vidas <= 0)
