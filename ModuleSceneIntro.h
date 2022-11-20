@@ -41,6 +41,8 @@ public:
 	SDL_Texture* Vanish_der;
 	SDL_Texture* Boing;
 	SDL_Texture* Boing_Star;
+	SDL_Texture* Tri;
+	SDL_Texture* Tri_;
 
 	//palas
 	PhysBody* muelle;
@@ -67,7 +69,10 @@ public:
 	PhysBody* sc3;
 
 	PhysBody* sp1;
-	PhysBody* sp2;
+	PhysBody* sp2;	
+	
+	PhysBody* st1;
+	PhysBody* st2;
 
 	PhysBody* sr;
 

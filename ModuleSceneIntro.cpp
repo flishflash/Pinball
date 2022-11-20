@@ -31,6 +31,7 @@ bool ModuleSceneIntro::Start()
 	died = false;
 
 	vidas = 3;
+	score = 0;
 
 	resetPos = { 291, 480 };
 
@@ -54,6 +55,8 @@ bool ModuleSceneIntro::Start()
 	Vanish_der = App->textures->Load("pinball/VanishCollider_der.png");
 	Boing = App->textures->Load("pinball/Collider_Star.png");
 	Boing_Star = App->textures->Load("pinball/Collider_Star_Brillando.png");
+	Tri = App->textures->Load("pinball/Collider_triangular.png");
+	Tri_ = App->textures->Load("pinball/Collider_triangular_reverso.png");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -74,6 +77,14 @@ bool ModuleSceneIntro::Start()
 	sp2->body->SetTransform(sp2->body->GetPosition(), 0.4235);
 	sr = App->physics->CreateRectangleSensor(45, 390, 13, 100);
 	sr->listener = this;
+
+	st1 = App->physics->CreateRectangleSensor(65, 495, 5, 50);
+	st1->listener = this;	
+	st1->body->SetTransform(st1->body->GetPosition(), -0.5);
+	st2 = App->physics->CreateRectangleSensor(225, 495, 5, 50);
+	st2->listener = this;
+	st2->body->SetTransform(st2->body->GetPosition(), 0.5);
+
 	// Add this module (ModuleSceneIntro) as a listener for collisions with the sensor.
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
@@ -144,6 +155,9 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(Boing, 107-13, 269-13);
 	App->renderer->Blit(Boing, 186-13, 267-13);
 	App->renderer->Blit(Boing, 150-13, 322-13);
+
+	App->renderer->Blit(Tri, 48, 470);
+	App->renderer->Blit(Tri_, 210, 470);
 
 	if (vidas == 3) App->renderer->Blit(circle, 80, 658);
 	if (vidas >= 2) App->renderer->Blit(circle, 55, 658);
@@ -259,10 +273,6 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(Vanish_izq, 49 - 29, 279 - 5, NULL, NULL, -30);
 	App->renderer->Blit(Vanish_der, 248 - 24, 279 - 7, NULL, NULL, 22);
 
-	if (vidas == 0)
-	{
-		score = 0;
-	}
 	// Keep playing
 	return UPDATE_CONTINUE;
 }
@@ -291,7 +301,14 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyB == sr) {
 		score += 5;
 	}
-	
+	if (bodyB == st1)
+	{
+		ball->body->ApplyLinearImpulse((b2Vec2{ PIXEL_TO_METERS(5), -PIXEL_TO_METERS(20)}), ball->body->GetLocalCenter(), true);
+	}
+	if (bodyB == st2)
+	{
+		ball->body->ApplyLinearImpulse((b2Vec2{ -PIXEL_TO_METERS(5), -PIXEL_TO_METERS(20) }), ball->body->GetLocalCenter(), true);
+	}
 
 	if (bodyB->body->GetPosition() == lower_ground_sensor->body->GetPosition() && vidas <= 0)
 	{
