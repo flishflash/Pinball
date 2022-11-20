@@ -37,8 +37,9 @@ public:
 	SDL_Texture* palaL;
 	SDL_Texture* Muelle;
 	SDL_Texture* Muellent;
-	SDL_Texture* Tri_izq;
-	SDL_Texture* Tri_der;
+	SDL_Texture* Vanish_izq;
+	SDL_Texture* Vanish_der;
+	SDL_Texture* Boing;
 
 	//palas
 	PhysBody* muelle;
@@ -47,6 +48,8 @@ public:
 	PhysBody* point_right;
 	PhysBody* left;
 	PhysBody* point_left;
+	PhysBody* vanish_izq;
+	PhysBody* vanish_der;
 	b2RevoluteJointDef Joint_right;
 	b2RevoluteJointDef Joint_left;
 
@@ -64,5 +67,7 @@ public:
 	b2Vec2 resetPos;
 	b2Vec2 initMPos;
 	b2Vec2 initMaxPos;
+	bool der = false;
+	bool izq = false;
 
 };

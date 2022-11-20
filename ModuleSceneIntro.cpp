@@ -35,6 +35,8 @@ bool ModuleSceneIntro::Start()
 
 	vida = false;
 
+	der, izq = false;
+
 	// Set camera position
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -45,8 +47,9 @@ bool ModuleSceneIntro::Start()
 	palaR = App->textures->Load("pinball/Pala_der.png");
 	Muelle = App->textures->Load("pinball/Pinball_spring.png");
 	Muellent = App->textures->Load("pinball/FIUYM_spring.png");
-	Tri_izq = App->textures->Load("pinball/Collider_triangular_izq.png");
-	Tri_der = App->textures->Load("pinball/Collider_triangular_der.png");
+	Vanish_izq = App->textures->Load("pinball/VanishCollider_izq.png");
+	Vanish_der = App->textures->Load("pinball/VanishCollider_der.png");
+	Boing = App->textures->Load("pinball/Collider_Star.png");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -61,6 +64,14 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateCircleStatic(186, 267, 13);
 	App->physics->CreateCircleStatic(150, 322, 13);
 
+	vanish_izq = App->physics->CreateRectangleSensor(46, 279, 10, 50);
+	vanish_izq->body->SetTransform(vanish_izq->body->GetPosition(), vanish_izq->body->GetAngle()+2.7f);
+	vanish_izq->listener = this;
+
+	vanish_der = App->physics->CreateRectangleSensor(248, 279, 10, 50);
+	vanish_der->body->SetTransform(vanish_der->body->GetPosition(), vanish_der->body->GetAngle() - 2.75f);
+	vanish_der->listener = this;
+
 	//MuelleInit
 	initMPos = { 283, 573 };
 	initMaxPos = { 288, 590 };
@@ -70,7 +81,7 @@ bool ModuleSceneIntro::Start()
 	muelle_max->body->SetType(b2_staticBody);
 	muelle_max->body->SetFixedRotation(true);
 
-	//Right 
+	//Joint Right 
 
 	right = App->physics->CreateRectangle(226, 559, 84, 20);
 
@@ -86,7 +97,7 @@ bool ModuleSceneIntro::Start()
 	Joint_right.localAnchorB.Set(0, 0);
 	b2RevoluteJoint* joint_right = (b2RevoluteJoint*)App->physics->world->CreateJoint(&Joint_right);
 
-	//Left
+	//Joint Left
 
 	left = App->physics->CreateRectangle(72, 559, 84, 20);
 
@@ -117,6 +128,13 @@ update_status ModuleSceneIntro::Update()
 {
 	
 	App->renderer->Blit(box, 0, 0);
+
+	App->renderer->Blit(Boing, 107-13, 269-13);
+	App->renderer->Blit(Boing, 186-13, 267-13);
+	App->renderer->Blit(Boing, 150-13, 322-13);
+
+	if (izq == false) App->renderer->Blit(Vanish_izq, METERS_TO_PIXELS(vanish_izq->body->GetPosition().x)-29, METERS_TO_PIXELS(vanish_izq->body->GetPosition().y)-5, NULL, NULL, -30);
+	if(der==false) App->renderer->Blit(Vanish_der, METERS_TO_PIXELS(vanish_der->body->GetPosition().x)-24, METERS_TO_PIXELS(vanish_der->body->GetPosition().y)-7, NULL, NULL, 22);
 
 	if (died==false)
 	{
@@ -174,25 +192,60 @@ update_status ModuleSceneIntro::Update()
 			Joint_left.lowerAngle = 25 * DEGTORAD;
 		}
 	}
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		died = true;
+
+		App->fadetoblack->FadeToblack(this, this, 50);
+
+		delete ball;
+		ball = NULL;
+		delete muelle;
+		muelle = NULL;
+		delete muelle_max;
+		muelle_max = NULL;
+		delete left;
+		left = NULL;
+		delete right;
+		right = NULL;
+		delete point_left;
+		point_left = NULL;
+		delete point_right;
+		point_right = NULL;
+	}
+
 	// Keep playing
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-
-	if (vidas >= 0)
+	if (bodyB->body->GetPosition() == lower_ground_sensor->body->GetPosition() && vidas >= 0)
 	{
 		if (vida==false)
 		{
 			vidas--;
 			vida = true;
 			LOG("vidas: %d", vidas);
+			izq = false;
+			der = false;
 		}
 
 	}
 
-	if (bodyB->body->GetType() == lower_ground_sensor->body->GetType() && vidas <= 0)
+	if (bodyB->body->GetPosition() == vanish_izq->body->GetPosition())
+	{
+		izq = true;
+	}
+
+	if (bodyB->body->GetPosition() == vanish_der->body->GetPosition())
+	{
+		der = true;
+	}
+
+
+
+	if (bodyB->body->GetPosition() == lower_ground_sensor->body->GetPosition() && vidas <= 0)
 	{
 		died = true;
 

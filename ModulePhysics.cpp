@@ -334,6 +334,12 @@ void ModulePhysics::CreateScenarioGround()
 		50, 241,	
 		54, 257,
 	};
+	int back_6[8] = {
+		236, 545,
+		247, 540,
+		247, 479,
+		247, 540,
+	};
 
 	CreateChain(0, 0, back, 42, map);
 	CreateChain(0, 0, back_1, 12, map);
@@ -341,6 +347,7 @@ void ModulePhysics::CreateScenarioGround()
 	CreateChain(0, 0, back_3, 12, map);
 	CreateChain(0, 0, back_4, 20, map);
 	CreateChain(0, 0, back_5, 20, map);
+	CreateChain(0, 0, back_6, 8, map);
 }
 
 PhysBody* ModulePhysics::CreateCircleStatic(int x, int y, int radius)
