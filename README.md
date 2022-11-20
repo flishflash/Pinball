@@ -1,4 +1,4 @@
-# Space Pinball
+# Space Pinball || UPC project
 
 ## Developers
 
