@@ -3,9 +3,9 @@
 ## Developers
 
  - Andreu Miró
- - José Antonio Tur
- - Joel Maldonado
  - Jan Liria
+ - Joel Maldonado
+ - José Antonio Tur
 
 ## Controls
 
