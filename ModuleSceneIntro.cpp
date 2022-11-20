@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 #include "FadeToBlack.h"
+#include "ModuleFonts.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_disabled) : Module(app, start_disabled)
 {
@@ -113,7 +114,8 @@ bool ModuleSceneIntro::Start()
 	Joint_left.localAnchorB.Set(0, 0);
 	b2RevoluteJoint* joint_left = (b2RevoluteJoint*)App->physics->world->CreateJoint(&Joint_left);
 
-
+	char lookupTable[] = { "0123456789abcdefghijklmnopqrstuvwxyz.@'&- " };
+	scoreFont = App->fonts->Load("pinball/ui_font.png", lookupTable, 1);
 	return ret;
 }
 
@@ -213,6 +215,20 @@ update_status ModuleSceneIntro::Update()
 		delete point_right;
 		point_right = NULL;
 	}
+	sprintf_s(scoreText, 10, "%7d", score);
+	sprintf_s(HighscoreText, 10, "%7d", highscore);
+
+	App->fonts->BlitText(10, 35, scoreFont, scoreText);
+
+	App->fonts->BlitText(75, 35, scoreFont, "hi");
+
+	//highscore
+	if (score > highscore)
+	{
+		highscore = score;  
+	}
+	App->fonts->BlitText(107, 35, scoreFont, HighscoreText);
+
 
 	// Keep playing
 	return UPDATE_CONTINUE;
