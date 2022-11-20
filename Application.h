@@ -9,13 +9,14 @@ class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
 class ModuleAudio;
-class ModulePlayer;
 class ModuleSceneIntro;
 class Intro;
 class Die;
+class ModulePlayer;
 class ModulePhysics;
 class FadeToBlack;
 class ModuleFonts;
+class Animation;
 
 
 class Application
@@ -27,12 +28,13 @@ public:
 	FadeToBlack* fadetoblack;
 	ModuleInput* input;
 	ModuleAudio* audio;
-	ModulePlayer* player;
 	Intro* intro;
 	ModuleSceneIntro* scene_intro;
 	Die* die;
+	ModulePlayer* player;
 	ModulePhysics* physics;
 	ModuleFonts* fonts;
+	Animation* animation;
 	
 
 private:

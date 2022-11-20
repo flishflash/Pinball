@@ -2,6 +2,9 @@
 #include "Application.h"
 #include "ModulePlayer.h"
 #include "Animation.h"
+#include "ModuleTextures.h"
+#include "ModuleRender.h"
+#include "ModulePhysics.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -14,6 +17,9 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
+
+
+
 	return true;
 }
 
@@ -28,6 +34,7 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+
 	return UPDATE_CONTINUE;
 }
 

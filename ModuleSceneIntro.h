@@ -1,6 +1,8 @@
 #pragma once
 #include "Module.h"
+#include "Animation.h"
 #include "ModulePhysics.h"
+#include "ModulePlayer.h"
 #include "p2List.h"
 #include "p2Point.h"
 #include "Globals.h"
@@ -40,6 +42,11 @@ public:
 	SDL_Texture* Vanish_izq;
 	SDL_Texture* Vanish_der;
 	SDL_Texture* Boing;
+	SDL_Texture* Bing;
+
+	//Animations
+	Animation pelotas;
+	Animation* currentAnimation = nullptr;
 
 	//palas
 	PhysBody* muelle;
@@ -69,6 +76,7 @@ public:
 	b2Vec2 initMaxPos;
 	bool der = false;
 	bool izq = false;
+	ModulePlayer* plaayer;
 
 	// Font score index
 	uint score = 000;
@@ -77,5 +85,4 @@ public:
 
 	uint highscore = 000;
 	char HighscoreText[10] = { "\0" };
-
 };

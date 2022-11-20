@@ -1,2 +1,4 @@
 ﻿  ModuleSceneIntro.cpp
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\Animation.h(55,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
   SDL Game.vcxproj -> C:\Users\lapiz\OneDrive\Documentos\GitHub\Pinball\Debug\Box2D - Tutorial.exe

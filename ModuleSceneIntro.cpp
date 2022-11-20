@@ -1,5 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
+#include "Animation.h"
 #include "ModuleRender.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleInput.h"
@@ -8,6 +9,7 @@
 #include "ModulePhysics.h"
 #include "FadeToBlack.h"
 #include "ModuleFonts.h"
+#include "ModulePlayer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_disabled) : Module(app, start_disabled)
 {
@@ -51,7 +53,19 @@ bool ModuleSceneIntro::Start()
 	Vanish_izq = App->textures->Load("pinball/VanishCollider_izq.png");
 	Vanish_der = App->textures->Load("pinball/VanishCollider_der.png");
 	Boing = App->textures->Load("pinball/Collider_Star.png");
+	Bing = App->textures->Load("pinball/Collider_Star_SpriteSheet.png");
 
+	//Load Animations
+	pelotas.PushBack({ 0, 26, 26, 26 });
+	pelotas.PushBack({ 26, 26, 26, 26 });
+	pelotas.PushBack({ 52, 26, 26, 26 });
+	pelotas.PushBack({ 78, 26, 26, 26 });
+	pelotas.PushBack({ 104, 26, 26, 26 });
+	pelotas.PushBack({ 130, 26, 26, 26 });
+	pelotas.loop = true;
+	pelotas.speed = 0.1f;
+	currentAnimation = &pelotas;
+	
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
 	lower_ground_sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT+25, SCREEN_WIDTH, 10);
@@ -108,6 +122,8 @@ bool ModuleSceneIntro::Start()
 
 	char lookupTable[] = { "0123456789abcdefghijklmnopqrstuvwxyz.@'&- " };
 	scoreFont = App->fonts->Load("pinball/ui_font.png", lookupTable, 1);
+	plaayer = App->player;
+
 	return ret;
 }
 
@@ -120,7 +136,6 @@ bool ModuleSceneIntro::CleanUp()
 
 update_status ModuleSceneIntro::Update()
 {
-	
 	App->renderer->Blit(box, 0, 0);
 
 	App->renderer->Blit(Boing, 107-13, 269-13);
@@ -130,6 +145,8 @@ update_status ModuleSceneIntro::Update()
 	if (vidas == 3) App->renderer->Blit(circle, 80, 658);
 	if (vidas >= 2) App->renderer->Blit(circle, 55, 658);
 	if (vidas >= 1) App->renderer->Blit(circle, 30, 658);
+
+
 
 	if (died==false)
 	{
@@ -224,6 +241,10 @@ update_status ModuleSceneIntro::Update()
 
 	App->renderer->Blit(Vanish_izq, 49 - 29, 279 - 5, NULL, NULL, -30);
 	App->renderer->Blit(Vanish_der, 248 - 24, 279 - 7, NULL, NULL, 22);
+
+	currentAnimation->Update();
+
+	App->renderer->Blit(Bing, 107 - 13, 269 - 13, &(currentAnimation->GetCurrentFrame()));
 
 	// Keep playing
 	return UPDATE_CONTINUE;
