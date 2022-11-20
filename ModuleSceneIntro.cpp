@@ -127,6 +127,10 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(Boing, 186-13, 267-13);
 	App->renderer->Blit(Boing, 150-13, 322-13);
 
+	if (vidas == 3) App->renderer->Blit(circle, 80, 658);
+	if (vidas >= 2) App->renderer->Blit(circle, 55, 658);
+	if (vidas >= 1) App->renderer->Blit(circle, 30, 658);
+
 	if (died==false)
 	{
 		App->renderer->Blit(Muelle, METERS_TO_PIXELS(muelle_max->body->GetPosition().x) - 10, METERS_TO_PIXELS(muelle_max->body->GetPosition().y) - 10);
@@ -220,10 +224,6 @@ update_status ModuleSceneIntro::Update()
 
 	App->renderer->Blit(Vanish_izq, 49 - 29, 279 - 5, NULL, NULL, -30);
 	App->renderer->Blit(Vanish_der, 248 - 24, 279 - 7, NULL, NULL, 22);
-
-	if (vidas == 3) App->renderer->Blit(circle, 80, 658);
-	if (vidas >= 2) App->renderer->Blit(circle, 55, 658);
-	if (vidas >= 1) App->renderer->Blit(circle, 30, 658);
 
 	// Keep playing
 	return UPDATE_CONTINUE;
